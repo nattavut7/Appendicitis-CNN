@@ -22,4 +22,5 @@ python main.py --mode infer --image data/sample_ct_images/example.png
 Data used in this study is available via institutional collaboration. Sample CT slices are included for demonstration.
 
 ## License
-MIT
+Nattavut Sriwiboon, Ph.D.
+Assistant Professor of Information Technology, Kalasin University, Thailand
