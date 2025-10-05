@@ -1,6 +1,6 @@
 # Appendicitis Detection using Lightweight CNN
 
-This repository provides the implementation of an ultra-lightweight CNN framework for detecting acute appendicitis from abdominal CT images.
+This repository provides the implementation of An Ultra-Lightweight CNN Framework for Automated Acute Appendicitis Detection from CT Images with Explainable Uncertainty Estimation.
 
 ## Model Performance
 - Accuracy: 99.7%
