@@ -1,0 +1,30 @@
+UPLOAD STEPS (Windows PowerShell)
+
+1. Download and extract Appendicitis-CNN-R2.zip to a folder.
+2. Clone your existing repository (you need Git and permission to push):
+
+   git clone https://github.com/nattavut7/Appendicitis-CNN.git
+   cd Appendicitis-CNN
+
+3. Back up/commit the current branch before replacing code:
+
+   git status
+   git switch -c revision-r2
+
+4. COPY contents of the extracted Appendicitis-CNN-R2 folder into the cloned
+   Appendicitis-CNN folder (overwrite main.py, requirements.txt, README.md etc.).
+   Optionally remove any stale obsolete code after review, but DO NOT delete .git.
+
+5. Review changes and verify no patient data or private checkpoints are staged:
+
+   git status
+   git diff --stat
+   git add .
+   git diff --cached --name-only
+   git commit -m "Add R2 reproducible CT pipeline and reviewer evidence checks"
+   git push -u origin revision-r2
+
+6. Open GitHub and create a Pull Request from revision-r2 to main. Verify the CI checks.
+   After merging, the updated repo can be cited in the revised manuscript.
+
+Caution: Nothing was uploaded automatically; this zip is a local deliverable.
