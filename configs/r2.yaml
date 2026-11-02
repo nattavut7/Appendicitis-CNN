@@ -1,0 +1,70 @@
+# R2 implementation configuration. Defaults are implementation choices,
+# NOT retrospective evidence of the original R1 experimental settings.
+seed: 2025
+output_dir: results/r2_run
+manifest: data/patients.csv
+image_root: .
+data:
+  image_size: 224
+  channels: 3
+  # DICOM conversion MUST specify the actually applied study HU window.
+  # Example only: [-160, 240] is a window centered at 40 HU with width 400 HU.
+  hu_window: null
+  # none | global | clahe. Explicit, not "optional".
+  histogram_equalization: none
+  # null means no physical resampling (not claimed otherwise).
+  target_spacing_mm: null
+  # For ordinary PNG/TIFF, normalize native pixel min/max.
+  non_dicom_normalization: per_image_minmax
+  # Do not assume that files are already cropped to an anatomical ROI.
+  require_roi: false
+  num_workers: 0
+model:
+  architecture: r2_cnn # r2_cnn | mobilenet_v2 | efficientnet_b0 | efficientnet_b2 | inception_v3 | vgg19
+  width_multiplier: 0.75
+  grouped_conv_groups: 2
+  spatial_kernel: 5
+  dropout: 0.2
+  classifier_hidden: 2008
+train:
+  epochs: 50
+  batch_size: 32
+  lr: 0.001
+  weight_decay: 0.0001
+  early_stopping_patience: 12
+  class_weighting: false
+  curriculum: true
+  curriculum_easy_until: 0.33
+  curriculum_moderate_until: 0.66
+  # If true, refuse unannotated difficulty labels.
+  strict_difficulty_labels: true
+augmentation:
+  profile: table2_full
+  # Probabilities below are explicit engineering defaults and MUST be checked
+  # against original training logs before representing R1 results.
+  rotation_degrees: 15
+  flip_probability: 0.5
+  affine_probability: 0.4
+  affine_scale: [0.9, 1.1]
+  affine_shear: 10
+  elastic_probability: 0.3
+  elastic_alpha_px: [1.0, 2.0]
+  elastic_sigma_fraction: [0.05, 0.1]
+  brightness_probability: 0.4
+  brightness_limit: 0.10
+  contrast_probability: 0.4
+  contrast_limit: 0.15
+  gaussian_noise_probability: 0.4
+  gaussian_noise_std: [0.01, 0.05]
+  crop_probability: 0.5
+  crop_scale: [0.85, 1.0]
+  cutmix_probability: 0.5
+  cutmix_patch_fraction: [0.2, 0.5]
+  mixup_probability: 0.4
+  mixup_alpha: 0.3
+uncertainty:
+  mc_passes: 20
+  validation_referral_quantile: 0.9
+statistical:
+  bootstrap_iterations: 1000
+  permutation_iterations: 2000
